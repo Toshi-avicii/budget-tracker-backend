@@ -9,6 +9,7 @@ import { connectRedis, dynamicRateLimiter, redisClient } from "./utils/rate-limi
 import { errorMiddleware } from "./middleware/errorMiddleware";
 
 const app = express();
+app.set('trust proxy', 1);
 
 // Define a custom format for Morgan to log using Winston
 const stream = {
