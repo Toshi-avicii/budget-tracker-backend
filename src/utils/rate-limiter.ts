@@ -18,7 +18,9 @@ let redisRateLimiter: RateLimitRequestHandler;
 
 // Connect to Redis with retry
 export async function connectRedis() {
-    redisClient = createClient();
+    redisClient = createClient({
+        url: "rediss://default:ATWFAAIjcDEzM2Q2MTQxNzQ2MmQ0NGRlOTgyZWM1MzgxOTk0MjA2MXAxMA@merry-crane-13701.upstash.io:6379"
+    });
 
     redisClient.on('error', (err) => {
         // console.log('❌ Redis connection failed. Using in-memory fallback.');
