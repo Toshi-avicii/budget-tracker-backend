@@ -11,10 +11,10 @@ const PORT = config.port;
 
 const server = http.createServer(app);
 
-const redisOptions: RedisOptions = { maxRetriesPerRequest: null, connectTimeout: 10000 };
-const redisClient = new Redis(redisOptions);
-const pub = new Redis(redisOptions);
-const sub = new Redis(redisOptions);
+const redisOptions: RedisOptions = { maxRetriesPerRequest: null, connectTimeout: 10000, tls: {}, password: config.upstashRedisPassword };
+const redisClient = new Redis(config.upstashRedisUrl!, redisOptions);
+const pub = new Redis(config.upstashRedisUrl!, redisOptions);
+const sub = new Redis(config.upstashRedisUrl!, redisOptions);
 let redisEnabled = true;
 let redisReadyCount = 0;
 let errorCount = 0;
