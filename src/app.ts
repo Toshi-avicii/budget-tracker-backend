@@ -24,6 +24,11 @@ app.use(cors({
     origin: ['http://localhost:3000', 'http://localhost:3001', 'https://budget-tracker-frontend-lime.vercel.app'],
     credentials: true
 })); // Cross-Origin Resource Sharing
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
 app.use(helmet()); // Security headers
 app.use(compression()); // Gzip compression
 app.use(morgan("combined", { stream })); // Logging
