@@ -23,7 +23,7 @@ export const setTokenCookie = async (req: Request, res: Response, next: NextFunc
     if (result) {
       res.status(200).cookie('token', result, {
         maxAge: (60 * 60 * 24 * 1000),
-        httpOnly: true,
+        httpOnly: false,
         secure: true,
         sameSite: 'none',
         path: '/'
