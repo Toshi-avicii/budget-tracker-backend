@@ -34,7 +34,7 @@ export default async function setupSocketEvents({
 }: Params) {
   const io = new IOServer(server, {
     cors: {
-      origin: ['http://localhost:3000', 'http://localhost:3001'], // adjust in production
+      origin: ['http://localhost:3000', 'http://localhost:3001', 'https://budget-tracker-frontend-lime.vercel.app'], // adjust in production
       methods: ['GET', 'POST'],
       credentials: true
     },
