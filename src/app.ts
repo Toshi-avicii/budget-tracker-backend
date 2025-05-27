@@ -7,6 +7,8 @@ import routes from "./routes";
 import logger from "./utils/logger";
 import { connectRedis, dynamicRateLimiter, redisClient } from "./utils/rate-limiter";
 import { errorMiddleware } from "./middleware/errorMiddleware";
+import passport from "passport";
+import "./utils/passport"
 
 const app = express();
 app.set('trust proxy', 1);
@@ -33,6 +35,7 @@ app.use(helmet()); // Security headers
 app.use(compression()); // Gzip compression
 app.use(morgan("combined", { stream })); // Logging
 app.use(dynamicRateLimiter); // rate limiting
+app.use(passport.initialize()); // using passport
 
 // for debugging redis data 
 app.get('/debug-keys', async (req, res) => {

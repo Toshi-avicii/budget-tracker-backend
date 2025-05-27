@@ -2,6 +2,9 @@ import { Router } from "express";
 import { googleSignIn, login, logout, resetPassword, sendResetLink, setTokenCookie, signUp } from '../controllers/auth.controller';
 import { authMiddleware } from "../middleware/authMiddleware";
 import rateLimit from "express-rate-limit";
+import passport from "passport";
+import config from "../config";
+import jwt from 'jsonwebtoken'
 
 const authRoutes = Router();
 
@@ -22,5 +25,16 @@ authRoutes.post('/set-cookie', setTokenCookie);
 authRoutes.get('/logout', authMiddleware, logout);
 authRoutes.post('/reset-password', resetPassword);
 authRoutes.post('/google-sign-in', googleSignIn);
+authRoutes.get('/google', passport.authenticate("google", { scope: ["profile", "email"] }));
+authRoutes.get("/google/callback", 
+    passport.authenticate("google", { session: false, failureRedirect: `${config.frontendUrl}/sign-in` }), 
+    (req, res) => {
+        const user = req.user as any;
+        const token = jwt.sign(user, config.jwtSecret, {
+            expiresIn: '1d'
+        });
+        // Redirect to frontend with token in query
+        res.redirect(`${config.frontendUrl}/sign-in?token=${token}`);
+    })
 
 export default authRoutes;
