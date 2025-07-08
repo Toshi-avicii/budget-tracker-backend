@@ -34,7 +34,7 @@ app.use((req, res, next) => {
 app.use(helmet()); // Security headers
 app.use(compression()); // Gzip compression
 app.use(morgan("combined", { stream })); // Logging
-app.use(dynamicRateLimiter); // rate limiting
+// app.use(dynamicRateLimiter); // rate limiting
 app.use(passport.initialize()); // using passport
 
 // for debugging redis data 
